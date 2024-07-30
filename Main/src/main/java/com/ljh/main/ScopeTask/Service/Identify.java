@@ -2,11 +2,8 @@ package com.ljh.main.ScopeTask.Service;
 
 
 import com.ljh.main.ScopeTask.Dto.ResultDto;
-import com.ljh.main.ScopeTask.Dto.TaskDto;
 import com.ljh.main.ScopeTask.mapper.ResultMapper;
-import com.ljh.main.ScopeTask.mapper.TaskMapper;
 import com.ljh.main.ScopeTask.pojo.Result;
-import com.ljh.main.ScopeTask.pojo.Task;
 import com.ljh.main.utils.GenerateIdUtils;
 import com.ljh.main.utils.JWTUtils;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,7 +11,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.modelmapper.ModelMapper;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
@@ -25,7 +21,7 @@ public class Identify {
     public void identify(ResultMapper resultMapper,String textContent,String taskId, HttpServletRequest req, HttpServletResponse resp) {
         Buffer buffer=new Buffer(3);
 
-        Producer producer=new Producer(buffer, textContent);
+        Producer1 producer=new Producer1(buffer, textContent);
         Consumer consumer=new Consumer(buffer, resultMapper, req, resp, taskId);
 
 
