@@ -5,7 +5,6 @@ import com.ljh.main.ScopeTask.pojo.Task;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.session.RowBounds;
 
 import java.util.List;
@@ -22,9 +21,6 @@ public interface TaskMapper {
 
     @Select("select * from task where username=#{username}")
     List<Task> getAllTasks(String username, RowBounds rowBounds);
-
-    @Update("update task set status = #{status} where taskid = #{taskId} and username=#{username}")
-    void updateTaskStatus(String taskId, String status, String username);
 
 
 
