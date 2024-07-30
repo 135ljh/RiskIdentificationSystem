@@ -4,6 +4,7 @@ package com.ljh.main.ScopeTask.Service;
 import com.google.gson.Gson;
 import com.ljh.main.Info;
 import com.ljh.main.ScopeTask.Dto.TaskDto;
+import com.ljh.main.ScopeTask.mapper.ResultMapper;
 import com.ljh.main.ScopeTask.mapper.TaskMapper;
 import com.ljh.main.ScopeTask.pojo.Task;
 import com.ljh.main.utils.GenerateIdUtils;
@@ -27,8 +28,11 @@ public class CreateTextTaskService {
     private final TaskMapper taskMapper;
     private final ModelMapper modelMapper = new ModelMapper();
 
-    public CreateTextTaskService(TaskMapper taskMapper) {
+    private final ResultMapper resultMapper;
+
+    public CreateTextTaskService(TaskMapper taskMapper, ResultMapper resultMapper) {
         this.taskMapper = taskMapper;
+        this.resultMapper = resultMapper;
     }
 
     @Autowired
@@ -50,9 +54,6 @@ public class CreateTextTaskService {
 
 
                 if (textContent == null || textContent.isEmpty()) {
-                    /*Info info = new Info();
-                    info.setMessage("文本内容不能为空");
-                    return ResponseEntity.badRequest().body(info);*/
                     String json = gson.toJson("文本内容不能为空");
                     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(json);
 
@@ -64,7 +65,6 @@ public class CreateTextTaskService {
                 taskDto.setFileType(fileType);
                 taskDto.setContent(textContent);
                 taskDto.setStatus("排队中");
-                //taskDto.setResultId(generateResultID());
                 String username = JWTUtils.getUsername(req, resp);
                 taskDto.setUsername(username);
 
@@ -73,10 +73,19 @@ public class CreateTextTaskService {
                 addTask(taskDto);
                 //System.out.println("任务提交成功");
 
+
+                // 调用识别功能
+                Identify identify = new Identify();
+                identify.identify(resultMapper,textContent,taskDto.getTaskId(),req,resp);
+
+                //更新任务状态
+                taskMapper.updateTaskStatus(taskDto.getTaskId(),"已完成",taskDto.getUsername());
+
                 Map<String, Object> map = new HashMap<>();
                 map.put("message", "提交成功");
                 map.put("taskId", taskDto.getTaskId());
                 return ResponseEntity.ok(map);
+
 
             } else {
                 System.out.println(fileType);

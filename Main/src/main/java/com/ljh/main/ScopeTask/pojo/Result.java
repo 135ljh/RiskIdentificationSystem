@@ -9,4 +9,5 @@ public class Result {
     private String category;
     private String score;
     private String message;
+    private String username;
 }
