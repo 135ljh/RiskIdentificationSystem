@@ -59,24 +59,34 @@ class MainApplicationTests {
         // 设置命令行传入参数
         String pythexeonpath= "\"C:\\Users\\13530\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe\"";
         String pythonscriptpath= "C:\\code\\RiskIdentificationSystem\\Main\\mock.py";
-        String[] args1 = new String[] {pythexeonpath ,pythonscriptpath,textContent};
+        String[] args1 = new String[] {pythexeonpath ,pythonscriptpath,"--text",textContent};
 
         // Java数据text传入Python
         Process pr;
         try {
             pr = Runtime.getRuntime().exec(args1);
+            System.out.println("pr:"+pr);
+
             BufferedReader in = new BufferedReader(new InputStreamReader(pr.getInputStream(), "UTF-8")); // 使用UTF-8编码
+            System.out.println("in:"+in);
             StringBuilder sb = new StringBuilder();
+            System.out.println("sb:"+sb);
             String line;
+            System.out.println("in.readLine():"+in.readLine());
             while ((line = in.readLine()) != null) {
                 sb.append(line);
+                System.out.println("line:"+line);
             }
+            System.out.println("line:"+line);
+            System.out.println("sb值："+sb);
             in.close();
             pr.waitFor();
 
             // 解析Python返回的JSON数据
             Gson gson = new Gson();
+
             Map<String, Object> result = gson.fromJson(sb.toString(), Map.class);
+            System.out.println(result);
 
             // 打印解析后的数据
             System.out.println(result.get("category"));

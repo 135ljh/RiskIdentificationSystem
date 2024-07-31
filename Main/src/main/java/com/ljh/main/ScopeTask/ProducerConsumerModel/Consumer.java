@@ -51,7 +51,7 @@ public void run() {
       Map<String, Object> result = null;
       try {
           pr = Runtime.getRuntime().exec(args1);
-          BufferedReader in = new BufferedReader(new InputStreamReader(pr.getInputStream(), "UTF-8")); // 使用UTF-8编码
+          BufferedReader in = new BufferedReader(new InputStreamReader(pr.getInputStream(), "GBK"));
           StringBuilder sb = new StringBuilder();
           String line;
           while ((line = in.readLine()) != null) {
