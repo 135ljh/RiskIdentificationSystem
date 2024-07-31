@@ -30,7 +30,7 @@ public class CreateTextTaskController {
     public ResponseEntity<?> createTextTask(
             @RequestParam("scopeType") String scopeType,
             @RequestParam("fileType") String fileType,
-            @RequestParam("textContent") String textContent,HttpServletRequest req, HttpServletResponse resp) throws InterruptedException {
+            @RequestParam("textContent") String textContent,HttpServletRequest req, HttpServletResponse resp) {
         System.out.println("进来了1");
 
         return createTextTaskService.createTextTask(scopeType,fileType,textContent,req,resp);
