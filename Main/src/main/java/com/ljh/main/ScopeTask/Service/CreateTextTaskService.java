@@ -17,11 +17,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 @Service
 public class CreateTextTaskService {
@@ -71,15 +68,6 @@ public class CreateTextTaskService {
                 System.out.println(taskDto);
 
                 addTask(taskDto);
-                //System.out.println("任务提交成功");
-
-
-                // 调用识别功能
-                Identify identify = new Identify();
-                identify.identify(resultMapper,textContent,taskDto.getTaskId(),req,resp);
-
-                //更新任务状态
-                taskMapper.updateTaskStatus(taskDto.getTaskId(),"已完成",taskDto.getUsername());
 
                 Map<String, Object> map = new HashMap<>();
                 map.put("message", "提交成功");
