@@ -68,8 +68,8 @@ public void run() {
     System.out.println("Java中动态参数已经初始化,准备传参");
 
     // 设置命令行传入参数
-    String pythexeonpath = "\"C:\\Users\\13530\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe\"";
-    String pythonscriptpath = "C:\\code\\RiskIdentificationSystem\\Main\\mock.py";
+    String pythexeonpath = "python3";
+    String pythonscriptpath = "mock.py";
     String[] args1 = new String[]{pythexeonpath, pythonscriptpath, "--text", text};
 
     // Java数据text传入Python
