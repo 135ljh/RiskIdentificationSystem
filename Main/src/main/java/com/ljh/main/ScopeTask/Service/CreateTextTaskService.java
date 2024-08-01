@@ -3,10 +3,9 @@ package com.ljh.main.ScopeTask.Service;
 
 import com.google.gson.Gson;
 import com.ljh.main.Info;
+import com.ljh.main.config.QueueConfig;
 import com.ljh.main.ScopeTask.Dto.TaskDto;
-import com.ljh.main.ScopeTask.mapper.ResultMapper;
 import com.ljh.main.ScopeTask.mapper.TaskMapper;
-import com.ljh.main.ScopeTask.pojo.Product;
 import com.ljh.main.ScopeTask.pojo.Task;
 import com.ljh.main.utils.GenerateIdUtils;
 import com.ljh.main.utils.JWTUtils;
@@ -23,10 +22,9 @@ import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 
 @Service
-public class CreateTextTaskService implements Runnable{
+public class CreateTextTaskService{
 
-    @Autowired
-    private Gson gson;
+    private final Gson gson;
 
     private final TaskMapper taskMapper;
 
@@ -37,13 +35,21 @@ public class CreateTextTaskService implements Runnable{
     }
 
 
-    //添加阻塞队列
-    public final BlockingQueue<String> queue;
 
-    public CreateTextTaskService(TaskMapper taskMapper,  BlockingQueue<String> queue) {
+
+    private final BlockingQueue<TaskDto> taskQueue;
+
+
+    @Autowired
+    public CreateTextTaskService(Gson gson, TaskMapper taskMapper, BlockingQueue<TaskDto> taskQueue) {
+        this.gson = gson;
         this.taskMapper = taskMapper;
-        this.queue = queue;
+        this.taskQueue = taskQueue;
     }
+
+
+
+
 
 
 
@@ -75,9 +81,7 @@ public class CreateTextTaskService implements Runnable{
 
                     addTask(taskDto);
 
-
-                    //生产者，产生的数据textContent放入阻塞队列中
-                    queue.put(textContent);
+                    taskQueue.put(taskDto);
 
                     Map<String, Object> map = new HashMap<>();
                     map.put("message", "提交成功");
@@ -100,12 +104,6 @@ public class CreateTextTaskService implements Runnable{
 
 
         }
-
-
-    @Override
-    public void run() {
-
-    }
 
 
     }

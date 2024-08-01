@@ -72,7 +72,7 @@ class MainApplicationTests {
             StringBuilder sb = new StringBuilder();
             System.out.println("sb:"+sb);
             String line;
-            System.out.println("in.readLine():"+in.readLine());
+
             while ((line = in.readLine()) != null) {
                 sb.append(line);
                 System.out.println("line:"+line);
