@@ -2,6 +2,7 @@ package com.ljh.main.ScopeTask.Service;
 
 
 import com.ljh.main.Info;
+import com.ljh.main.ScopeTask.Dto.Results;
 import com.ljh.main.ScopeTask.mapper.ResultMapper;
 import com.ljh.main.ScopeTask.pojo.Result;
 import com.ljh.main.utils.JWTUtils;
@@ -34,8 +35,17 @@ public class GetResultByIdService {
 
 
         }
+
+        Results results=new Results();
+        results.setResultId(resultId);
+        results.setTaskId(result.getTaskId());
+        results.setCategory(new String[]{result.getCategory()});
+        results.setScore(result.getScore());
+        results.setMessage(result.getMessage());
+        results.setUsername(result.getUsername());
+
         //记录存在，返回所有信息
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(results);
 
     }
 

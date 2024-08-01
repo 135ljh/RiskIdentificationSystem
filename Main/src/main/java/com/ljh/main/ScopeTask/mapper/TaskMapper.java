@@ -26,6 +26,9 @@ public interface TaskMapper {
     @Update("update task set status = #{status} where taskid = #{taskId} and username=#{username}")
     void updateTaskStatus(String taskId, String status, String username);
 
+    @Update( "update task set resultid = #{resultId} where taskid = #{taskId} and username=#{username}")
+    void addResultId(String resultId, String taskId, String username);
+
 
 
 }

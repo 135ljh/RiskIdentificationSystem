@@ -6,8 +6,10 @@ import com.ljh.main.ScopeTask.Dto.TaskDto;
 import com.ljh.main.ScopeTask.mapper.ResultMapper;
 import com.ljh.main.ScopeTask.mapper.TaskMapper;
 import com.ljh.main.ScopeTask.pojo.Result;
+import com.ljh.main.ScopeTask.pojo.Task;
 import com.ljh.main.config.QueueConfig;
 import com.ljh.main.utils.GenerateIdUtils;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +28,7 @@ public class Consumer implements Runnable {
     private final ResultMapper resultMapper;
     private final BlockingQueue<TaskDto> taskQueue;
     private final TaskMapper taskMapper;
+
 
 
     @Autowired
@@ -114,6 +117,8 @@ public void run() {
 
     taskMapper.updateTaskStatus(task.getTaskId(), "已完成", task.getUsername());
 
+    taskMapper.addResultId(results.getResultId(), task.getTaskId(), task.getUsername());
+
 
 }
 
@@ -122,6 +127,11 @@ private static String getStringValue(Map<String, Object> map, String key) {
                    .map(Object::toString)
                    .orElse(null);
 }
+
+
+
+
+
 
 
 }
