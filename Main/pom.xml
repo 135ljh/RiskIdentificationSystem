@@ -142,6 +142,7 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                    <mainClass>com.ljh.MainApplication</mainClass>
                 </configuration>
             </plugin>
         </plugins>
